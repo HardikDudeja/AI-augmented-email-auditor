@@ -117,8 +117,8 @@ function App() {
   };
 
   const clearResults = () => {
-    setThreadData([]);
-    setUploadedFile([]);
+    setThreadData(null);
+    setUploadedFile(null);
   };
 
   async function auditEmailThread() {

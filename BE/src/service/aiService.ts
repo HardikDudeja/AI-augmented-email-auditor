@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "KEY";
+const GEMINI_API_KEY =
+  process.env.GEMINI_API_KEY || "AIzaSyDDO8aQ_cY-aulTB4FwxbTkvVlyX1VUIbo";
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 
 if (GEMINI_API_KEY === "KEY" || !GEMINI_API_KEY) {

@@ -1,0 +1,36 @@
+# Dockerfile.dev
+
+
+FROM node:18-alpine AS backend_builder
+WORKDIR /app/BE
+COPY BE/package*.json ./
+RUN npm install
+COPY BE/ .
+RUN npm run build
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy the *built* backend (dist and node_modules) from the backend_builder stage.
+COPY --from=backend_builder /app/BE /app/BE
+
+
+
+COPY FE/package*.json /app/FE/
+COPY FE/ /app/FE/
+
+WORKDIR /app/FE
+RUN npm install
+
+WORKDIR /app
+
+COPY start-dev.sh .
+RUN chmod +x start-dev.sh
+
+EXPOSE 5173 
+EXPOSE 3000 
+
+ENV NODE_ENV development
+
+CMD ["./start-dev.sh"]

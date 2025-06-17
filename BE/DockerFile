@@ -1,0 +1,40 @@
+# backend/Dockerfile
+
+# Stage 1: Build Backend (TypeScript)
+FROM node:18-alpine AS backend_builder
+
+WORKDIR /app
+
+# Copy package.json and package-lock.json first
+COPY package*.json ./
+
+# Install backend dependencies (for production, use --production=true here)
+# For development, you'd skip --production
+RUN npm install
+
+# Copy the rest of the backend source code
+COPY . .
+
+# Build the TypeScript backend
+RUN npx tsc -b
+
+# Stage 2: Final Production Backend Image
+# Use a lean base image for the final runtime
+FROM node:18-alpine AS final_backend_image
+
+WORKDIR /app
+
+# Copy only production dependencies (optional, but good for smaller images)
+# If you used 'npm install --production' in builder, this is redundant.
+# If using 'npm install' without --production, then copy package*.json and npm install --production=true here.
+COPY --from=backend_builder /app/node_modules /app/node_modules
+COPY --from=backend_builder /app/package*.json /app/
+
+# Copy the built JavaScript code
+COPY --from=backend_builder /app/dist /app/dist
+
+# Expose the port your backend listens on
+EXPOSE 3000
+
+# Command to run the backend server
+CMD ["node", "dist/index.js"]

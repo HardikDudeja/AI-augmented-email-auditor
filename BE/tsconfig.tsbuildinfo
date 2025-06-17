@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/engine/ruleengine.ts","./src/models/email.ts","./src/models/evaluationresult.ts","./src/models/rule.ts","./src/parser/emlparser.ts","./src/rules/interpreter.ts","./src/service/aiservice.ts","./src/utils/threadutils.ts"],"version":"5.8.3"}

@@ -1,0 +1,35 @@
+{
+  "emails": [
+    {
+      "subject": "Project Phoenix Kick-off",
+      "from": "manager@example.com",
+      "to": "employee@example.com",
+      "date": "2025-06-16T09:00:00Z",
+      "text": "Dear Employee,\n\nHope you're having a good week. We're kicking off Project Phoenix. Please review the attached document and prepare your initial thoughts by end of day.\n\nBest regards,\nManager",
+      "messageId": "phoenix-thread-001",
+      "threadId": "phoenix-thread-XYZ"
+    },
+    {
+      "subject": "Re: Project Phoenix Kick-off",
+      "from": "employee@example.com",
+      "to": "manager@example.com",
+      "date": "2025-06-16T15:30:00Z",
+      "text": "Dear Manager,\n\nThank you for the update on Project Phoenix. I have reviewed the document and will prepare my thoughts. I anticipate sending them over by 5 PM today. Please let me know if you need anything further.\n\nSincerely,\nEmployee",
+      "messageId": "phoenix-thread-002",
+      "inReplyTo": "phoenix-thread-001",
+      "references": ["phoenix-thread-001"],
+      "threadId": "phoenix-thread-XYZ"
+    },
+    {
+      "subject": "Fwd: Project Phoenix Kick-off - my thoughts",
+      "from": "employee@example.com",
+      "to": "manager@example.com",
+      "date": "2025-06-18T10:00:00Z",
+      "text": "Hi boss,\n\nJust sending over my thoughts on Phoenix. It's really comprehensive! Attached. Let me know what you think.\n\nCheers,\nEmployee",
+      "messageId": "phoenix-thread-003",
+      "inReplyTo": "phoenix-thread-001",
+      "references": ["phoenix-thread-001", "phoenix-thread-002"],
+      "threadId": "phoenix-thread-XYZ"
+    }
+  ]
+}

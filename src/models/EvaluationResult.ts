@@ -11,3 +11,12 @@ export interface EmailEvaluation {
   results: RuleEvaluationResult[];
   suggestions: string[];
 }
+
+export interface ThreadAuditReport {
+  threadId: string;
+  averageThreadScore: number;
+  emailEvaluations: EmailEvaluation[];
+  overallStrengths: string;
+  overallImprovementAreas: string;
+  topSuggestions: string[];
+}

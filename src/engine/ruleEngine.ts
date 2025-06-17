@@ -1,5 +1,3 @@
-import fs from "fs";
-import path from "path";
 import { getAiResponse } from "../service/aiService";
 import { RawRule_AI } from "../models/Rule";
 import { ParsedEmail } from "../models/Email";
@@ -64,28 +62,45 @@ export async function evaluateEmail(
   for (const rule of finalRules) {
     let ruleScore = 0;
     let justificationText = "";
-    let promptVariables: { [key: string]: string | number | null } = {
-      subject: email.subject,
-      from: email.from,
-      to: email.to,
-      date: email.date,
-      text: email.text,
-      html: email.html || "",
-      messageId: email.messageId || "",
-      inReplyTo: email.inReplyTo || "",
-      threadId: email.threadId || "",
-    };
 
     let currentPrompt = rule.promptTemplate;
-    for (const key in promptVariables) {
-      currentPrompt = currentPrompt.replace(
-        new RegExp(`\\{${key}\\}`, "g"),
-        String(promptVariables[key] || "")
-      );
+    for (const key in email) {
+      if (Object.prototype.hasOwnProperty.call(email, key)) {
+        const value = (email as any)[key];
+        let replacementValue: string;
+
+        if (value === undefined || value === null) {
+          replacementValue = ""; // Treat undefined/null as empty string
+        } else if (Array.isArray(value)) {
+          // Handle arrays:
+          if (key === "attachments") {
+            // For attachments, provide a readable summary
+            replacementValue = value
+              .map(
+                (a: { name: string; contentType: string }) =>
+                  `${a.name} (${a.contentType})`
+              )
+              .join("; ");
+          } else {
+            // For other string arrays like 'references', join them
+            replacementValue = value.join(", ");
+          }
+        } else if (typeof value === "object") {
+          // For other object types (e.g., if you had a nested object), stringify them
+          replacementValue = JSON.stringify(value);
+        } else {
+          // For primitive types (string, number, boolean), convert to string
+          replacementValue = String(value);
+        }
+
+        currentPrompt = currentPrompt.replace(
+          new RegExp(`\\{${key}\\}`, "g"),
+          replacementValue
+        );
+      }
     }
     try {
       const aiResponse = await getAiResponse(currentPrompt);
-      console.log("AI Response:", aiResponse);
       let passedRule = false;
       switch (rule.expectedAiOutputFormat) {
         case "boolean":
@@ -105,11 +120,12 @@ export async function evaluateEmail(
       }
     } catch (error) {
       console.error(`Error processing rule ${rule.id}:`, error);
-      ruleScore = 0; // Assign a failing score if AI call fails
+      ruleScore = 0;
       justificationText = `Failed to get AI response for this rule: ${
         error instanceof Error ? error.message : String(error)
       }. Using default fail justification: ${rule.justification.fail}`;
     }
+
     results.push({
       ruleId: rule.id,
       ruleName: rule.name,

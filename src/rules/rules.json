@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Professional Greeting",
+    "type": "startsWithAny",
+    "field": "text",
+    "params": ["hi", "hello", "dear", "greetings"],
+    "score": 1,
+    "justification": {
+      "pass": "Email contains a professional greeting.",
+      "fail": "Email is missing a professional greeting."
+    }
+  },
+  {
+    "name": "Clarity",
+    "type": "avgWordsPerSentence",
+    "field": "text",
+    "params": {
+      "threshold": 25
+    },
+    "score": 1,
+    "justification": {
+      "pass": "Sentences are clear and concise.",
+      "fail": "Sentences may be too long and unclear."
+    }
+  }
+]

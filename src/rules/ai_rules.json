@@ -1,0 +1,59 @@
+[
+  {
+    "id": "RULE_001",
+    "name": "Professional Greeting",
+    "description": "Checks if the email begins with a professional salutation.",
+    "type": "content",
+    "promptTemplate": "Does the email content start with a professional greeting such as 'Dear [Name]', 'Hello [Name]', 'Hi [Name]'? Respond with 'true' if it does, 'false' otherwise, followed by a brief justification. Email Content: '{email.text}'",
+    "expectedAiOutputFormat": "boolean",
+    "weight": 0.15,
+    "justification": {
+      "pass": "The email includes a professional greeting.",
+      "fail": "The email lacks a clear professional greeting."
+    }
+  },
+  {
+    "id": "RULE_002",
+    "name": "Timely Response",
+    "description": "Evaluates if the email was responded to within an acceptable timeframe (e.g., 24 hours).",
+    "type": "timing",
+    "promptTemplate": "Given that an email was received {timeDifferenceInHours} hours ago, and this is the reply, would you consider this a timely response for a professional context? Consider a typical expectation of a 24-hour response time. Respond with 'true' if timely, 'false' otherwise, followed by a brief justification. (Provide numeric time difference for context: {timeDifferenceInHours} hours)",
+    "expectedAiOutputFormat": "boolean",
+    "params": {
+      "maxResponseHours": 24
+    },
+    "weight": 0.25,
+    "justification": {
+      "pass": "The email was responded to within an appropriate timeframe.",
+      "fail": "The response time for this email was excessively long, exceeding typical expectations."
+    }
+  },
+  {
+    "id": "RULE_003",
+    "name": "Clarity and Conciseness",
+    "description": "Assesses the clarity, readability, and conciseness of the email content.",
+    "type": "content",
+    "promptTemplate": "Rate the clarity and conciseness of the following email content on a scale of 1 to 5, where 1 is very unclear and verbose, and 5 is perfectly clear and concise. Provide a short justification for your rating. Email Content: '{email.text}'",
+    "expectedAiOutputFormat": "numeric_scale",
+    "outputScale": { "min": 1, "max": 5, "goodThreshold": 4 },
+    "weight": 0.3,
+    "justification": {
+      "pass": "The email content is clear and concise.",
+      "fail": "The email content lacks clarity or is overly verbose."
+    }
+  },
+  {
+    "id": "RULE_005",
+    "name": "Grammar and Spelling",
+    "description": "Identifies significant grammatical errors or spelling mistakes.",
+    "type": "content",
+    "promptTemplate": "Review the following email for any significant grammatical errors or spelling mistakes. If there are issues, list them. If not, state 'No significant errors'. Email Content: \"{emailText}\"",
+    "expectedAiOutputFormat": "boolean",
+    "weight": 0.1,
+    "justification": {
+      "pass": "The email has no significant grammar or spelling errors.",
+      "fail": "The email contains grammatical errors or spelling mistakes."
+    },
+    "suggestionTemplate": "Proofread your emails carefully for grammar and spelling before sending."
+  }
+]

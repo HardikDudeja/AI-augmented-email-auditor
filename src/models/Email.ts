@@ -5,7 +5,8 @@ export interface ParsedEmail {
   date: string;
   text: string;
   html?: string;
-  messageId?: string;
+  messageId: string;
+  threadId: string;
   inReplyTo?: string;
   references?: string[];
   attachments?: { name: string; contentType: string }[];

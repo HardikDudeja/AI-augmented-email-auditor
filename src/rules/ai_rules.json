@@ -4,7 +4,7 @@
     "name": "Professional Greeting",
     "description": "Checks if the email begins with a professional salutation.",
     "type": "content",
-    "promptTemplate": "Does the email content start with a professional greeting such as 'Dear [Name]', 'Hello [Name]', 'Hi [Name]'? Respond with 'true' if it does, 'false' otherwise, followed by a brief justification. Email Content: '{email.text}'",
+    "promptTemplate": "Does the email content start with a professional greeting such as 'Dear [Name]', 'Hello [Name]', 'Hi [Name]'? Respond with 'true' if it does, 'false' otherwise, followed by a brief justification. Email Content: '{text}'",
     "expectedAiOutputFormat": "boolean",
     "weight": 0.15,
     "justification": {
@@ -43,7 +43,7 @@
     }
   },
   {
-    "id": "RULE_005",
+    "id": "RULE_004",
     "name": "Grammar and Spelling",
     "description": "Identifies significant grammatical errors or spelling mistakes.",
     "type": "content",

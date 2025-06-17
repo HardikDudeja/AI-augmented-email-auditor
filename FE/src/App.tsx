@@ -1,11 +1,4 @@
-import {
-  AlertCircle,
-  CheckCircle,
-  FileText,
-  Mail,
-  Shield,
-  Zap,
-} from "lucide-react";
+import { CheckCircle, FileText, Mail, Shield, Zap } from "lucide-react";
 import {
   Card,
   CardContent,

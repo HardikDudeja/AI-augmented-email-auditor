@@ -190,7 +190,19 @@ This file allows you to:
 * **Assign weights/scores:** Determine how much each rule contributes to the overall audit score.
 * **Configure rule parameters:** Set specific thresholds or patterns for rules.
 
-This extensibility means you can easily adapt the auditor to different communication standards or add new evaluation criteria without modifying the core backend code. The `rules.json` is configured by the backend development team to define the current set of auditing criteria.
+The backend's auditing logic is driven by a flexible rule engine that uses configuration files to define evaluation criteria.
+
+* **`rules.json`**: This file (typically located in `backend/src/config/`) defines traditional, rule-based auditing criteria. It allows you to:
+    * Define custom rules: Specify conditions for evaluating emails (e.g., "Check for professional greeting," "Assess email length").
+    * Assign weights/scores: Determine how much each rule contributes to the overall audit score.
+    * Configure rule parameters: Set specific thresholds or patterns for rules.
+
+* **`ai_rules.json`**: This file (also typically found in `backend/src/config/`) is specifically designed for configuring **AI-driven evaluation rules**.
+    * **Extensibility:** You can add more AI-based rules to this file to expand the AI agent's evaluation capabilities.
+    * **AI Agent Evaluation:** The AI agent will evaluate the email content based on the rules defined in `ai_rules.json`.
+    * **Current Testing Focus:** Currently, testing for AI evaluation is primarily focused on the **first configured AI rule/Professional Greeting** within this file, but the architecture supports the inclusion and evaluation of many more.
+
+This extensible configuration means you can easily adapt the auditor to different communication standards or add new, sophisticated evaluation criteria (both rule-based and AI-driven) without modifying the core backend code. Both `rules.json` and `ai_rules.json` are configured by the backend development team to define the current set of auditing criteria.
 
 ---
 

@@ -101,7 +101,6 @@ You will need to run both the backend API and the frontend dashboard separately.
 
     The backend server should start on `http://localhost:3000`. You'll see a message like "Backend server running on [http://0.0.0.0:3000](https://www.google.com/search?q=http://0.0.0.0:3000)" or similar in your terminal.
 
-      * **Health Check:** You can verify the backend is running by visiting `http://localhost:3000/api/health` in your browser. You should see a success message.
 
 ### 2\. Run the Frontend Dashboard
 
@@ -181,11 +180,6 @@ email-auditor-project/
 ## API Endpoints
 
 **Backend (http://localhost:3000)**
-
-  * **`GET /api/health`**
-
-      * **Description:** Checks the health and status of the API.
-      * **Response:** `{"status":"ok","message":"Email Auditor API is running!"}`
 
   * **`POST /api/audit/email`**
 

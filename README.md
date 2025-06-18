@@ -135,11 +135,64 @@ You will need to run both the backend API and the frontend dashboard separately.
 2.  **Upload JSON File:**
       * Drag and drop your JSON file containing email data onto the designated upload area, or click to browse.
       * The JSON file should conform to the `ThreadAuditRequest` structure expected by the backend.
-3.  **Generate Report:** Click the "Generate Audit Report" button.
-4.  **View Results:** The dashboard will display a comprehensive audit report including overall thread scores, individual email evaluations, rule-specific feedback, strengths, and areas for improvement.
-5.  **New Audit / Export:** Use the buttons to clear the current report and start a new audit, or to export the current report as a JSON file.
+3.  **Sample Thread Data:**
+    You can use the following sample JSON structure for a thread audit. Save this content as `sampleThread.json` (e.g., in a `samples/` directory at your project root) and upload it to the frontend.
+
+    ```json
+    {
+      "emails": [
+        {
+          "subject": "Project Phoenix Kick-off",
+          "from": "manager@example.com",
+          "to": "employee@example.com",
+          "date": "2025-06-16T09:00:00Z",
+          "text": "Dear Employee,\n\nHope you're having a good week. We're kicking off Project Phoenix. Please review the attached document and prepare your initial thoughts by end of day.\n\nBest regards,\nManager",
+          "messageId": "phoenix-thread-001",
+          "threadId": "phoenix-thread-XYZ"
+        },
+        {
+          "subject": "Re: Project Phoenix Kick-off",
+          "from": "employee@example.com",
+          "to": "manager@example.com",
+          "date": "2025-06-16T15:30:00Z",
+          "text": "Dear Manager,\n\nThank you for the update on Project Phoenix. I have reviewed the document and will prepare my thoughts. I anticipate sending them over by 5 PM today. Please let me know if you need anything further.\n\nSincerely,\nEmployee",
+          "messageId": "phoenix-thread-002",
+          "inReplyTo": "phoenix-thread-001",
+          "references": ["phoenix-thread-001"],
+          "threadId": "phoenix-thread-XYZ"
+        },
+        {
+          "subject": "Fwd: Project Phoenix Kick-off - my thoughts",
+          "from": "employee@example.com",
+          "to": "manager@example.com",
+          "date": "2025-06-18T10:00:00Z",
+          "text": "Hi boss,\n\nJust sending over my thoughts on Phoenix. It's really comprehensive! Attached. Let me know what you think.\n\nCheers,\nEmployee",
+          "messageId": "phoenix-thread-003",
+          "inReplyTo": "phoenix-thread-001",
+          "references": ["phoenix-thread-001", "phoenix-thread-002"],
+          "threadId": "phoenix-thread-XYZ"
+        }
+      ]
+    }
+    ```
+4.  **Generate Report:** Click the "Generate Audit Report" button.
+6.  **View Results:** The dashboard will display a comprehensive audit report including overall thread scores, individual email evaluations, rule-specific feedback, strengths, and areas for improvement.
+6.  **New Audit / Export:** Use the buttons to clear the current report and start a new audit, or to export the current report as a JSON file.
 
 -----
+
+## Backend Rule Configuration (`rules.json`)
+
+The backend's auditing logic is driven by a flexible rule engine. This engine reads its configuration from a `rules.json` file (typically located in the `backend/src/config/` or `backend/` directory).
+
+This file allows you to:
+* **Define custom rules:** Specify the criteria for evaluating emails (e.g., "Check for professional greeting," "Assess email length").
+* **Assign weights/scores:** Determine how much each rule contributes to the overall audit score.
+* **Configure rule parameters:** Set specific thresholds or patterns for rules.
+
+This extensibility means you can easily adapt the auditor to different communication standards or add new evaluation criteria without modifying the core backend code. The `rules.json` is configured by the backend development team to define the current set of auditing criteria.
+
+---
 
 ## Project Structure
 
